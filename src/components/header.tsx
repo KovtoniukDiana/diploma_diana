@@ -1,6 +1,9 @@
 'use client'
 import Image from "next/image";
+import { useState } from "react";
 import { navItems } from "../config/navigation";
+import RegistrationModal from "./registration.modal";
+import LoginModal from "./login.modal";
 import {
   Navbar,
   NavbarBrand,
@@ -13,8 +16,9 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
-  navbar,
+  Button
 } from "@heroui/react";
+import { link } from "fs";
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
@@ -64,6 +68,9 @@ export const SearchIcon = ({size = 24, strokeWidth = 1.5, width, height, ...prop
 
 export default function App() {
 
+  const [isRegostrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
 
   return (
     <Navbar isBordered>
@@ -99,6 +106,10 @@ export default function App() {
           startContent={<SearchIcon size={18} />}
           type="search"
         />
+
+        <Button as={Link} href="#" onPress={() => setIsRegistrationOpen(true)} >Зареєструватися</Button>
+        <Button as={Link} href="#" onPress={() => setIsLoginOpen(true)} >Увійти</Button>
+
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
@@ -110,6 +121,7 @@ export default function App() {
               size="sm"
               src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
+
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
@@ -128,6 +140,9 @@ export default function App() {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
+
+      <RegistrationModal isOpen={isRegostrationOpen} onClose={() => setIsRegistrationOpen(false)} />
+      <LoginModal isOpen={isLoginOpen} onClose={() => {setIsLoginOpen(false)}} />
     </Navbar>
   );
 }
