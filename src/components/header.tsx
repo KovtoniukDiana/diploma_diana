@@ -4,6 +4,7 @@ import { useState } from "react";
 import { navItems } from "../config/navigation";
 import RegistrationModal from "./registration.modal";
 import LoginModal from "./login.modal";
+import ThemeSwitcher from './theme.switcher'
 import {
   Navbar,
   NavbarBrand,
@@ -18,7 +19,6 @@ import {
   Avatar,
   Button
 } from "@heroui/react";
-import { link } from "fs";
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
@@ -99,7 +99,7 @@ export default function App() {
             mainWrapper: "h-full",
             input: "text-small",
             inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+              "rounded-lg bg-pink-100 hover:bg-gray-200 h-full font-normal text-default-500",
           }}
           placeholder="Type to search..."
           size="sm"
@@ -140,6 +140,8 @@ export default function App() {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
+
+      <ThemeSwitcher />
 
       <RegistrationModal isOpen={isRegostrationOpen} onClose={() => setIsRegistrationOpen(false)} />
       <LoginModal isOpen={isLoginOpen} onClose={() => {setIsLoginOpen(false)}} />
