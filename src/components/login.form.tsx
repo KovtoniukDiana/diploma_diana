@@ -1,6 +1,7 @@
 'use client'
 import React, {useState} from 'react'
-import {Form, Input} from "@heroui/react";
+import {Form, Input } from "@heroui/react";
+import GoogleSignInButton from './googleSignInButton';
 
 
 export default function RegistrationForm() {
@@ -35,6 +36,8 @@ export default function RegistrationForm() {
             return null;
 
         }}  />
+
+        <GoogleSignInButton />
 
     </Form>
   )

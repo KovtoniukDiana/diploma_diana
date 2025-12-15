@@ -5,20 +5,9 @@ import { navItems } from "../config/navigation";
 import RegistrationModal from "./registration.modal";
 import LoginModal from "./login.modal";
 import ThemeSwitcher from './theme.switcher'
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Input,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  Avatar,
-  Button
-} from "@heroui/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button} from "@heroui/react";
+import { useSession, signOut } from "next-auth/react";
+
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
@@ -71,6 +60,9 @@ export default function App() {
   const [isRegostrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
+  const session = useSession();
+  console.log(session);
+
 
   return (
     <Navbar isBordered>
@@ -96,10 +88,10 @@ export default function App() {
         <Input
           classNames={{
             base: "max-w-full sm:max-w-[10rem] h-10",
-            mainWrapper: "h-full",
+            mainWrapper: "h-full ",
             input: "text-small",
             inputWrapper:
-              "rounded-lg bg-pink-100 hover:bg-gray-200 h-full font-normal text-default-500",
+              "rounded-lg bg-pink-100 hover:bg-gray-200 h-full font-normal text-default-500 border-2 border-pink-300",
           }}
           placeholder="Type to search..."
           size="sm"
@@ -107,38 +99,48 @@ export default function App() {
           type="search"
         />
 
-        <Button as={Link} href="#" onPress={() => setIsRegistrationOpen(true)} >Зареєструватися</Button>
-        <Button as={Link} href="#" onPress={() => setIsLoginOpen(true)} >Увійти</Button>
+          
+        {session.status === 'authenticated' ? 
+          <>
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="secondary"
+                  name="Jason Hughes"
+                  size="sm"
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
 
-        <Dropdown placement="bottom-end">
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
-              size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
+              </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">zoey@example.com</p>
+                  </DropdownItem>
+                  <DropdownItem key="settings">My Settings</DropdownItem>
+                  <DropdownItem key="team_settings">Team Settings</DropdownItem>
+                  <DropdownItem key="analytics">Analytics</DropdownItem>
+                  <DropdownItem key="system">System</DropdownItem>
+                  <DropdownItem key="configurations">Configurations</DropdownItem>
+                  <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+                  <DropdownItem key="logout" color="danger">
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
 
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
-            </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+            <Button as={Link} href="#" onPress={() => signOut({callbackUrl: "/"})} >Вийти</Button>
+          </>
+          :
+          <>
+            <Button as={Link} href="#" onPress={() => setIsRegistrationOpen(true)} >Зареєструватися</Button>
+            <Button as={Link} href="#" onPress={() => setIsLoginOpen(true)} >Увійти</Button>
+          </>
+          }
+      
       </NavbarContent>
 
       <ThemeSwitcher />
