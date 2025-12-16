@@ -11,7 +11,7 @@ interface IProps {
 export default function LoginModal({isOpen, onClose}: IProps) {
   return (
     <CustomModal isOpen={isOpen} onClose={onClose} title="Увійти в акаунт">
-        <LoginForm />
+        <LoginForm onClose={onClose} />
     </CustomModal>
   )
 }

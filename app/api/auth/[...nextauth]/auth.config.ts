@@ -2,6 +2,8 @@ import type { AuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import getUserFromDB from "@/src/utils/user";
+import { comparePassword } from "@/src/utils/hashPassword";
+
 
 export const authConfig: AuthOptions = {
     
@@ -23,12 +25,19 @@ export const authConfig: AuthOptions = {
 
                 const currentUser = await getUserFromDB(credentials.email);
 
-                if(currentUser && currentUser.password === credentials.password) {
+                if(!currentUser) {
+                    throw Error("Невірний email або пароль");
+                };
+
+                const passwordMatch = await comparePassword(credentials.password, currentUser.password);
+
+                if (passwordMatch) {
                     const {password, ...userWithoutPass} = currentUser;
                     return userWithoutPass as User;
+                    
+                } else {
+                    throw new Error("Невірний email або пароль.");
                 }
-
-                return null
             }
         })
     ]

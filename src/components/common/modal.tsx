@@ -1,5 +1,5 @@
 'use client'
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button} from "@heroui/react";
+import {Modal, ModalContent, ModalHeader, ModalBody} from "@heroui/react";
 import { ReactNode } from "react";
 
 interface IProps {
@@ -21,15 +21,6 @@ export default function CustomModal({isOpen, onClose, children, title, size='xs'
                 <ModalBody>
                     {children}
                 </ModalBody>
-
-                <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
-                        Закрити
-                    </Button>
-                    <Button color="primary" onPress={onClose}>
-                        Продовжити
-                    </Button>
-                </ModalFooter>
 
             </ModalContent>
         </Modal>

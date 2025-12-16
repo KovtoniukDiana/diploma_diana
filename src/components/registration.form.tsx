@@ -1,10 +1,14 @@
 'use client'
 import React, {useState} from 'react'
-import {Form, Input} from "@heroui/react";
+import {Form, Input, Button} from "@heroui/react";
 import GoogleSignInButton from './googleSignInButton';
 
+interface IProps {
+    onClose: () => void;
+}
 
-export default function RegistrationForm() {
+
+export default function RegistrationForm({onClose}: IProps) {
 
     const [formData, setFormData] = useState(
         {
@@ -13,14 +17,32 @@ export default function RegistrationForm() {
             confirmPassword: ''
         }
     )
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateEmail = (email: string) => {
         const emailRegex =  /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
         return emailRegex.test(email);
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+
+            const data = await response.json();
+
+            
+        } catch (error) {
+            console.error("Error during registration:", error);
+        }
     }
 
   return (
@@ -54,6 +76,15 @@ export default function RegistrationForm() {
             return null;
 
         }}  />
+
+        <div className='flex justify-between'>
+            <Button color="danger" variant="light" onPress={onClose}>
+                Закрити
+            </Button>
+            <Button color="primary" type='submit' onPress={onClose}>
+                Продовжити
+            </Button>
+        </div>
 
         <GoogleSignInButton />
     </Form>

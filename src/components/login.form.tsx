@@ -1,10 +1,14 @@
 'use client'
 import React, {useState} from 'react'
-import {Form, Input } from "@heroui/react";
+import {Form, Input, Button } from "@heroui/react";
 import GoogleSignInButton from './googleSignInButton';
+import { signIn } from 'next-auth/react';
 
+interface IProps {
+    onClose: () => void;
+}
 
-export default function RegistrationForm() {
+export default function RegistrationForm({onClose}: IProps) {
 
     const [formData, setFormData] = useState(
         {
@@ -13,8 +17,21 @@ export default function RegistrationForm() {
         }
     )
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const result = await signIn('credentials', {
+            redirect: false,
+            email: formData.email,
+            password: formData.password,
+        })
+
+        if (result?.error) {
+            console.error("Login failed:", result.error);
+        } else {
+            onClose();
+        }
+
     }
 
   return (
@@ -36,6 +53,15 @@ export default function RegistrationForm() {
             return null;
 
         }}  />
+
+        <div className='flex justify-between'>
+            <Button color="danger" variant="light" onPress={onClose}>
+                Закрити
+            </Button>
+            <Button color="primary" type='submit'>
+                Продовжити
+            </Button>
+        </div>
 
         <GoogleSignInButton />
 
