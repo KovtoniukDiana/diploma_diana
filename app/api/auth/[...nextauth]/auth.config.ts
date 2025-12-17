@@ -3,10 +3,14 @@ import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import getUserFromDB from "@/src/utils/user";
 import { comparePassword } from "@/src/utils/hashPassword";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import  prisma  from "@/src/utils/prisma";
 
 
 export const authConfig: AuthOptions = {
     
+    adapter: PrismaAdapter(prisma),
+
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,

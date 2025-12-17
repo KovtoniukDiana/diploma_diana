@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import {Form, Input, Button} from "@heroui/react";
 import GoogleSignInButton from './googleSignInButton';
+import { signIn } from "next-auth/react";
 
 interface IProps {
     onClose: () => void;
@@ -38,6 +39,16 @@ export default function RegistrationForm({onClose}: IProps) {
             })
 
             const data = await response.json();
+
+            const signInResult = await signIn("credentials", {
+                email: formData.email,
+                password: formData.password,
+                redirect: false,
+                });
+
+                if (signInResult?.error) {
+                throw new Error(signInResult.error);
+            }
 
             
         } catch (error) {
