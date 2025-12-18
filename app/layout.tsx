@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/src/providers/provider";
 import Header from "@/src/components/header";
+import Stars from "@/src/components/bg_stars";
+import Hearts from "@/src/components/bg_hearts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +33,10 @@ export default function RootLayout({
         <Providers>
           <Header />
 
-          <main>
+          <main id="animated-bg" >
+            <Hearts />
+            <Stars />
+
             {children}
           </main>
 

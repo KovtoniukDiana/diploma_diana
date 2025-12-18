@@ -6,7 +6,7 @@ import {Button} from "@heroui/react";
 export default function Home() {
   return (
     <div className="flex ">
-      Main page
+      <p>Main page</p>
 
       
     </div>

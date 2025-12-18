@@ -91,7 +91,7 @@ export default function App() {
             mainWrapper: "h-full ",
             input: "text-small",
             inputWrapper:
-              "rounded-lg bg-pink-100 hover:bg-gray-200 h-full font-normal text-default-500 border-2 border-pink-300",
+              "rounded-lg bg-pink-100 hover:bg-pink-100 h-full font-normal text-default-500 border-2 border-pink-300",
           }}
           placeholder="Type to search..."
           size="sm"

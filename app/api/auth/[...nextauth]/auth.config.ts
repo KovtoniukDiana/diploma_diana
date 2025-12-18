@@ -11,6 +11,11 @@ export const authConfig: AuthOptions = {
     
     adapter: PrismaAdapter(prisma),
 
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
+    },
+
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -33,7 +38,7 @@ export const authConfig: AuthOptions = {
                     throw Error("Невірний email або пароль");
                 };
 
-                const passwordMatch = await comparePassword(credentials.password, currentUser.password);
+                const passwordMatch = await comparePassword(credentials.password, currentUser.password as string);
 
                 if (passwordMatch) {
                     const {password, ...userWithoutPass} = currentUser;
