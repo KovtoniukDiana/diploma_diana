@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/src/providers/provider";
 import Header from "@/src/components/header";
-import Stars from "@/src/components/bg_stars";
-import Hearts from "@/src/components/bg_hearts";
+import Background from "@/src/components/backgr";
+import Footer from "@/src/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Films with Diana",
-  description: "Diana's favorite films collection",
+  title: "Dianema",
+  description: "Diana's cinema",
 };
 
 export default function RootLayout({
@@ -33,12 +33,17 @@ export default function RootLayout({
         <Providers>
           <Header />
 
-          <main id="animated-bg" >
-            <Hearts />
-            <Stars />
+          <div className="min-h-screen flex flex-col">
+            <main className="relative grow">
+              <div className="absolute inset-0">
+                <Background />
+              </div>
+              
+              {children}
+            </main>
 
-            {children}
-          </main>
+          <Footer />
+          </div>
 
         </Providers>
       </body>

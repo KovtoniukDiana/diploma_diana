@@ -2,6 +2,14 @@
 @source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 
 
+@font-face {
+  font-family: 'SpaceGrotesk-Regular';
+  src: url(/fonts/SpaceGrotesk-Regular.ttf);
+}
+
+.font-spaceGrotesk {
+  font-family: SpaceGrotesk-Regular;
+}
 
 :root {
   --background: #ffffff;
@@ -22,7 +30,7 @@ body {
 }
 
 .light body {
-  background-color: #ffc7db;
+  background-color: #ffe9f1;
 }
 .light body p, .light body a{
   color: black;
@@ -36,10 +44,18 @@ body {
   color: white;
 }
 
-#animated-bg {
+
+.light footer {
+  background-color: #ffdbe8;
+}
+.dark footer {
+  background-color: rgb(12, 2, 40);
+}
+
+.animated-bg {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 .light .heart {
@@ -54,11 +70,16 @@ body {
 .dark .star {
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width:9px;
+  height:9px;
   background: gold;
   animation: twinkle 2s infinite ease-in-out;
 }
+
+.dark .dark-bg {
+  background-color: rgb(255, 255, 112);
+}
+
 
 @keyframes twinkle {
   0% {
@@ -74,6 +95,20 @@ body {
     transform: scale(0.6);
   }
 }
+
+.marquee__track {
+  animation: scroll 100s linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 
 
 

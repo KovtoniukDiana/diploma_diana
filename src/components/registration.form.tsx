@@ -13,6 +13,7 @@ export default function RegistrationForm({onClose}: IProps) {
 
     const [formData, setFormData] = useState(
         {
+            name: '',
             email: '',
             password: '',
             confirmPassword: ''
@@ -41,6 +42,7 @@ export default function RegistrationForm({onClose}: IProps) {
             const data = await response.json();
 
             const signInResult = await signIn("credentials", {
+                name: formData.name,
                 email: formData.email,
                 password: formData.password,
                 redirect: false,
@@ -58,6 +60,15 @@ export default function RegistrationForm({onClose}: IProps) {
 
   return (
     <Form className='w-full' onSubmit={handleSubmit} >
+
+        <Input placeholder='Name' isRequired name='name' value={formData.name}
+        classNames={{inputWrapper: 'bg-default-100', input: 'text-sm focus: outline-none'}}
+        onChange={(e) => setFormData({...formData, name: e.target.value})}
+        validate={(value) => {
+            if(!value) return "Ім'я обов'язкове"
+
+        }}  />
+
         <Input placeholder='Email' isRequired name='email' value={formData.email}
         classNames={{inputWrapper: 'bg-default-100', input: 'text-sm focus: outline-none'}}
         onChange={(e) => setFormData({...formData, email: e.target.value})}

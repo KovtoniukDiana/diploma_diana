@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
     try {
 
-        const { email, password, confirmPassword } = await req.json();
+        const { name, email, password, confirmPassword } = await req.json();
 
         const existingUser = await prisma.user.findUnique({where: { email }});
         if(existingUser) {
@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
 
         const newUser = await prisma.user.create({
             data: {
+                name: name,
                 email: email,
                 password: hashedPassword,
             }

@@ -20,7 +20,9 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 
 export const Logo = () => {
   return (
-    <Image src='/logo.png' alt="logo" width={40} height={40} priority></Image>
+    <Link className="inline-block h-10 w-10" href="/">
+      <Image src='/logo.png' alt="logo" width={40} height={40} priority></Image>
+    </Link>
   );
 };
 
@@ -61,21 +63,22 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const session = useSession();
+  const {data} = session;
   console.log(session);
 
 
   return (
     <Navbar isBordered>
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
+        <NavbarBrand className="mr-10">
           <Logo />
-          <p className="hidden sm:block font-bold text-inherit text-[18px]">IANA</p>
+          <Link className="hidden sm:block font-bold text-inherit text-[18px]" href="/">IANEMA</Link>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-7">
 
           {navItems.map((item) => (
             <NavbarItem key={`label-${item.label}`}>
-              <Link color="foreground" href={`/${item.href}`} >
+              <Link color="foreground" href={`${item.href}`} >
                 {item.label}
               </Link>
             </NavbarItem>
@@ -104,30 +107,40 @@ export default function App() {
           <>
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  as="button"
-                  className="transition-transform"
-                  color="secondary"
-                  name="Jason Hughes"
-                  size="sm"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
+                {
+                  data?.user?.image ?
+
+                  <Avatar
+                    isBordered
+                    as="button"
+                    className="transition-transform"
+                    color="secondary"
+                    name="Jason Hughes"
+                    size="sm"
+                    src={data.user.image}
+                  /> 
+                  :
+                  <Avatar
+                    isBordered
+                    as="button"
+                    className="transition-transform"
+                    color="secondary"
+                    name="Jason Hughes"
+                    size="sm"
+                    src="/user.png"
+                  />
+                }
+
+                
 
               </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
                   <DropdownItem key="profile" className="h-14 gap-2">
-                    <p className="font-semibold">Signed in as</p>
-                    <p className="font-semibold">zoey@example.com</p>
+                    <p className="font-semibold">Вітаємо, {data?.user?.name}!</p>
                   </DropdownItem>
-                  <DropdownItem key="settings">My Settings</DropdownItem>
-                  <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                  <DropdownItem key="analytics">Analytics</DropdownItem>
-                  <DropdownItem key="system">System</DropdownItem>
-                  <DropdownItem key="configurations">Configurations</DropdownItem>
-                  <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-                  <DropdownItem key="logout" color="danger">
-                    Log Out
+                  <DropdownItem key="team_settings"><p>Вподобані фільми</p></DropdownItem>
+                  <DropdownItem key="logout" color="danger" onPress={() => signOut({callbackUrl: "/"})}>
+                    <p>Вийти з акаунту</p>
                   </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
