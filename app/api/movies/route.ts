@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-import { env } from "node:process";
+
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 

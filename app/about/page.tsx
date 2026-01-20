@@ -85,7 +85,7 @@ export default function AboutPage() {
 
       
       <div  className='fixed bottom-0 left-2.5 w-112.5 h-3/4 '>
-        <Image src='/round.png' alt=''fill className="h-full w-auto object-bottom" />
+        <Image src='/round.png' alt=''fill className="h-full w-auto object-bottom" priority />
       </div>
 
 

@@ -39,7 +39,9 @@ export default function RootLayout({
                 <Background />
               </div>
               
-              {children}
+              <div className="relative flex flex-col mt-12 z-10 items-center">
+                {children}
+              </div>
             </main>
 
           <Footer />

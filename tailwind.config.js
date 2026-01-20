@@ -1,4 +1,4 @@
-const { heroui } = require("@heroui/theme");
+const { heroui } = require("@heroui/react");
 
 module.exports = {
   darkMode: "class",
@@ -11,5 +11,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [heroui()],
+  plugins: [heroui && typeof heroui === 'function' ? heroui() : heroui.heroui()],
 };
