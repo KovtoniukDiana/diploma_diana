@@ -1,5 +1,6 @@
 'use client'
 import Image from "next/image";
+import { Heart, LogOut } from 'lucide-react';
 import { useState } from "react";
 import { navItems } from "../config/navigation";
 import RegistrationModal from "./registration.modal";
@@ -134,15 +135,42 @@ export default function App() {
                 
 
               </DropdownTrigger>
-                <DropdownMenu aria-label="Profile Actions" variant="flat">
-                  <DropdownItem key="profile" className="h-14 gap-2">
-                    <p className="font-semibold">Вітаємо, {data?.user?.name}!</p>
-                  </DropdownItem>
-                  <DropdownItem key="team_settings"><p>Вподобані фільми</p></DropdownItem>
-                  <DropdownItem key="logout" color="danger" onPress={() => signOut({callbackUrl: "/"})}>
-                    <p>Вийти з акаунту</p>
-                  </DropdownItem>
-                </DropdownMenu>
+                <DropdownMenu 
+                aria-label="Profile Actions" 
+                variant="faded" 
+                className="p-2 min-w-60 bg-white border border-gray-100 shadow-xl rounded-2xl"
+              >
+                <DropdownItem 
+                  key="profile" 
+                  isReadOnly 
+                  className="h-16 gap-2 opacity-100 border-b border-gray-50 mb-1"
+                >
+                  <div className="flex flex-col gap-1">
+                    <p className="text-xs text-gray-400! font-medium uppercase tracking-wider">Акаунт</p>
+                    <p className="font-bold text-black!">
+                      Вітаємо, {data?.user?.name || 'Гість'}!
+                    </p>
+                  </div>
+                </DropdownItem>
+
+                <DropdownItem 
+                  key="team_settings"
+                  startContent={<Heart className="text-pink-500" size={18} />}
+                  className="hover:bg-pink-50 transition-colors py-3"
+                >
+                  <p className="text-gray-700! font-medium">Вподобані фільми</p>
+                </DropdownItem>
+
+                <DropdownItem 
+                  key="logout" 
+                  color="danger" 
+                  onPress={() => signOut({callbackUrl: "/"})}
+                  className="text-danger mt-2 bg-red-50/50 hover:bg-red-100 transition-colors py-3"
+                  startContent={<LogOut size={18} />}
+                >
+                  <p className="font-semibold text-black!">Вийти з акаунту</p>
+                </DropdownItem>
+              </DropdownMenu>
             </Dropdown>
 
             <Button as={Link} href="#" onPress={() => signOut({callbackUrl: "/"})} >Вийти</Button>

@@ -1,7 +1,10 @@
+'use client'
+import React, {useState} from "react";
 import Image from "next/image";
 import {Button} from "@heroui/react";
 import { bestComments } from "@/src/config/best_comments";
 import Posters from "@/src/components/posters";
+import { useMovies } from "@/src/hooks/useMovies";
 
 const RatingCircle = ({ rating  , size = 50, stroke = 6 }) => {
     const normalizedRating = Math.min(Math.max(rating, 0), 10);
@@ -61,22 +64,15 @@ const RatingCircle = ({ rating  , size = 50, stroke = 6 }) => {
 };
 
 
-export default async function Home() {
+export default function Home() {
 
-  
-  const res = await fetch( 'http://localhost:3000/api/movies?page=1&genre=28&rating=7',
-    { cache: 'no-store' }
-  );
-  
-  if (!res.ok) {
-    const errorText = await res.text();
-    console.error("Помилка сервера:", errorText);
-    return <div>Помилка завантаження фільмів. Спробуйте пізніше.</div>;
-  }
-  
+  const [page, setPage] = useState<number>(1);
+  const [type, setType] = useState<'movie' | 'tv'>('movie');
+  const [selectedGenre, setSelectedGenre] = useState<number | undefined>();
 
-  const data = await res.json();
-  const movies = data.results || [];
+  const { data, loading } = useMovies({type, page, genre: selectedGenre});
+
+    
 
   return (
     <>
@@ -127,7 +123,7 @@ export default async function Home() {
 
           <div className="w-full overflow-x-auto pb-10">
             <div className="flex w-fit gap-5 ml-4 mr-4">
-              {movies.map((movie) => (
+              {data.map((movie : any) => (
                 <div key={`movie-slider-id-${movie.id}`} className="flex flex-col w-40">
 
                   <div className="relative w-full  rounded-xl bg-gray-900 h-55">
@@ -157,36 +153,7 @@ export default async function Home() {
 
           </div>
 
-
-
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 pb-8 w-[85%]">
-            {movies.map((movie) => (
-              <div key={`movie-id-${movie.id}`} className="flex flex-col">
-
-                <div className="relative aspect-2/3 w-full overflow-hidden rounded-xl bg-gray-900">
-
-                  <img 
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
-                    alt={movie.title}
-                    className="w-full h-full object-cover"
-                  />
-                  
-
-                  <div className="absolute top-2 right-2 bg-black/70 text-yellow-400 px-2 py-1 rounded-md text-sm font-bold">
-                    {movie.vote_average.toFixed(1)}
-                  </div>
-                </div>
-
-                <p className="mt-2 font-medium line-clamp-1">
-                  {movie.title}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-      
+        </div> 
     </>
   );
 }

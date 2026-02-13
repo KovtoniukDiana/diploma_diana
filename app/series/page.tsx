@@ -2,10 +2,10 @@
 import ContentGrid from "@/src/components/common/content.grid"
 
 
-export default function FilmsPage() {
+export default function SeriesPage() {
 
     return (
 
-        <ContentGrid type="movie" />
+        <ContentGrid type="tv" />
     )
 }
