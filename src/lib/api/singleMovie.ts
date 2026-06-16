@@ -1,24 +1,24 @@
-
-interface IProps  {
-    id: string;
-    type: 'movie' | 'tv';
+interface IProps {
+  id: string;
+  type: 'movie' | 'tv';
 }
 
-export async function fetchSingleMovie ({ id, type } : IProps) {
+export async function fetchSingleMovie({ id, type }: IProps) {
+  const params = new URLSearchParams({
+    language: 'uk-UA',
+    append_to_response: 'credits,videos,images',
+  });
 
-    const params = new URLSearchParams({
-        type
-    });
-
-    
-    const response = await fetch(`http://localhost:3000/api/movies/${id}?${params}`, { 
-        
-        cache: 'no-store' 
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to fetch movie details'); 
+  const response = await fetch(
+    `https://api.themoviedb.org/3/${type}/${id}?${params}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+      },
+      next: { revalidate: 3600 },
     }
+  );
 
-    return response.json();
-} 
+  if (!response.ok) throw new Error('Failed to fetch movie details');
+  return response.json();
+}

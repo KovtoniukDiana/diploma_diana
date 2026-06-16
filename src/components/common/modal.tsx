@@ -6,15 +6,16 @@ interface IProps {
     isOpen: boolean;
     onClose: () => void;
     children: ReactNode;
-    title: string;
-    size?: "xs" | "sm" | "md" | "lg"| "xl";
+    title?: string;
+    size?: "xs" | "sm" | "md" | "lg"| "xl" | "5xl";
+    className?: string;
 }
 
-export default function CustomModal({isOpen, onClose, children, title, size='xs' }: IProps) {
+export default function CustomModal({isOpen, onClose, children, title, size, className }: IProps) {
 
   return (
 
-        <Modal backdrop='blur' isOpen={isOpen} onClose={onClose} size={size} className="bg-pink-100 p-[25px] rounded-md border-2 border-pink-300" >
+        <Modal backdrop='blur' isOpen={isOpen} onClose={onClose} size={size} className={className} >
             <ModalContent>
                 <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
 

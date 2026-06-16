@@ -32,7 +32,7 @@ body {
 .light body {
   background-color: #ffe9f1;
 }
-.light body p, .light body a{
+.light body p, .light body a, .light body h1, .light body h2, .light body h3{
   color: black;
 }
 
@@ -40,7 +40,7 @@ body {
 .dark body {
   background-color: rgb(8, 2, 25);
 }
-.dark body p, .dark body a {
+.dark body p, .dark body a, .dark body h1, .dark body h2, .dark body h3 {
   color: white;
 }
 
@@ -51,6 +51,7 @@ body {
 .dark footer {
   background-color: rgb(12, 2, 40);
 }
+
 
 .animated-bg {
   position: relative;

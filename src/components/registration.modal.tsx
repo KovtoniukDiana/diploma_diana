@@ -10,7 +10,7 @@ interface IProps {
 
 export default function RegistrationModal({isOpen, onClose}: IProps) {
   return (
-    <CustomModal isOpen={isOpen} onClose={onClose} title="Створення акаунту">
+    <CustomModal isOpen={isOpen} onClose={onClose} title="Створення акаунту" size="xs" className="bg-pink-100 p-6.25 rounded-md border-2 border-pink-300" >
         <RegistrationForm onClose={onClose} />
     </CustomModal>
   )

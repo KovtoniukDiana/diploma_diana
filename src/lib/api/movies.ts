@@ -1,29 +1,44 @@
-
-interface IProps  {
+interface IProps {
     type: 'movie' | 'tv';
     page: number;
     genre?: number;
+    year?: string;
+    year_gte?: string;
+    year_lte?: string;
 }
 
-export async function fetchMovies ({ type, page, genre } : IProps) {
+export async function fetchMovies({ type, page, genre, year, year_gte, year_lte }: IProps) {
+    const isMovie = type === 'movie';
 
-    const params = new URLSearchParams({
-        type,
+    const paramsObj: Record<string, string> = {
+        language: 'uk-UA',
         page: page.toString(),
-        rating: '7'
-    });
+        'vote_average.gte': '7',
+    };
 
-    if (genre) {
-        params.append('genre', genre.toString());
+    if (genre) paramsObj['with_genres'] = genre.toString();
+    if (year) {
+        paramsObj[isMovie ? 'primary_release_year' : 'first_air_date_year'] = year;
+    }
+    if (year_gte) {
+        paramsObj[isMovie ? 'primary_release_date.gte' : 'first_air_date.gte'] = `${year_gte}-01-01`;
+    }
+    if (year_lte) {
+        paramsObj[isMovie ? 'primary_release_date.lte' : 'first_air_date.lte'] = `${year_lte}-12-31`;
     }
 
-    const response = await fetch(`http://localhost:3000/api/movies?${params}`, { 
-        cache: 'no-store' 
-    });
+    const params = new URLSearchParams(paramsObj);
 
-    if (!response.ok){
-        throw new Error('Failed to fetch movies'); 
-    }
+    const response = await fetch(
+        `https://api.themoviedb.org/3/discover/${type}?${params}`,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+            },
+            next: { revalidate: 3600 },
+        }
+    );
 
-    return response.json()
-} 
+    if (!response.ok) throw new Error('Failed to fetch movies');
+    return response.json();
+}

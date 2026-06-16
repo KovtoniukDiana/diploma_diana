@@ -12,6 +12,9 @@ export interface IMovieDetails {
   runtime?: number;
   budget?: number;
   revenue?: number;
+  images?: {
+    backdrops: { file_path: string }[];
+  };
 
   credits?: {
     cast: {

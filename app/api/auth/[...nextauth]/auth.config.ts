@@ -30,7 +30,6 @@ export const authConfig: AuthOptions = {
             async authorize(credentials) {
                 if(!credentials?.email || !credentials?.password) return null;
 
-                //const currentUser = {email: 'buben111004@gmail.com', password: '1234532'};
 
                 const currentUser = await getUserFromDB(credentials.email);
 
