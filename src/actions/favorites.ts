@@ -42,3 +42,19 @@ export async function getFavorites(userId: string) {
     orderBy: { createdAt: 'desc' }
   })
 }
+
+export async function isFavorited(tmdbId: string, mediaType: 'movie' | 'tv') {
+  const session = await getServerSession(authConfig)
+  if (!session?.user?.email) return false
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email }
+  })
+  if (!user) return false
+
+  const favorite = await prisma.favorite.findUnique({
+    where: { userId_tmdbId: { userId: user.id, tmdbId } }
+  })
+
+  return favorite?.mediaType === mediaType
+}

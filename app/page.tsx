@@ -48,25 +48,25 @@ export default async function Home() {
     return (
         <>
             <div className="overflow-hidden w-full">
-                <div className="marquee__track flex flex-row w-max gap-20">
+                <div className="marquee__track flex flex-row w-max gap-8 sm:gap-20">
                     {bestComments.map((item) => (
-                        <div key={`favComm-${item.id}`} className="track-item font-spaceGrotesk flex flex-col w-75 justify-between">
+                        <div key={`favComm-${item.id}`} className="track-item font-spaceGrotesk flex flex-col w-56 sm:w-75 justify-between">
                             <p>
-                                <span className="text-2xl">"</span>
-                                <span className="text-xl ml-1.5 mr-1.5">{item.comment}</span>
-                                <span className="text-2xl">"</span>
+                                <span className="text-xl sm:text-2xl">"</span>
+                                <span className="text-base sm:text-xl ml-1.5 mr-1.5">{item.comment}</span>
+                                <span className="text-xl sm:text-2xl">"</span>
                             </p>
-                            <p className="mt-3 text-lg">{item.name}</p>
+                            <p className="mt-3 text-base sm:text-lg">{item.name}</p>
                         </div>
                     ))}
                     {bestComments.map((item) => (
-                        <div key={`copyFavComm-${item.id}`} className="track-item font-spaceGrotesk flex flex-col w-75 justify-between">
+                        <div key={`copyFavComm-${item.id}`} className="track-item font-spaceGrotesk flex flex-col w-56 sm:w-75 justify-between">
                             <p>
-                                <span className="text-2xl">"</span>
-                                <span className="text-xl ml-1.5 mr-1.5">{item.comment}</span>
-                                <span className="text-2xl">"</span>
+                                <span className="text-xl sm:text-2xl">"</span>
+                                <span className="text-base sm:text-xl ml-1.5 mr-1.5">{item.comment}</span>
+                                <span className="text-xl sm:text-2xl">"</span>
                             </p>
-                            <p className="mt-3 text-lg">{item.name}</p>
+                            <p className="mt-3 text-base sm:text-lg">{item.name}</p>
                         </div>
                     ))}
                 </div>
@@ -76,7 +76,7 @@ export default async function Home() {
                 <Posters />
 
                 <div className="items-start w-[85%]">
-                    <p className="font-bold text-2xl mt-16 mb-8">Популярне зараз</p>
+                    <p className="font-bold text-2xl mt-10 sm:mt-16 mb-6 sm:mb-8">Популярне зараз</p>
                 </div>
 
                 <div className="w-full overflow-x-auto pb-10">

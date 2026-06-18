@@ -25,7 +25,7 @@ export default function CommentItem({ comment, movieId, currentUserId, depth = 0
     const isOwner = currentUserId && comment.user?.email === currentUserId
 
     return (
-        <div className={`flex flex-col gap-2 ${depth > 0 ? 'ml-8 pl-4 border-l border-gray-100' : ''}`}>
+        <div className={`flex flex-col gap-2 ${depth > 0 ? 'ml-4 pl-3 sm:ml-8 sm:pl-4 border-l border-gray-100' : ''}`}>
             <div className='flex flex-col gap-1 bg-white/50 rounded-xl p-4'>
 
                 {/* Шапка коментаря */}
@@ -70,7 +70,7 @@ export default function CommentItem({ comment, movieId, currentUserId, depth = 0
 
             {/* Форма відповіді */}
             {showReply && (
-                <div className='ml-8'>
+                <div className='ml-4 sm:ml-8'>
                     <CommentForm
                         movieId={movieId}
                         parentId={comment.id}

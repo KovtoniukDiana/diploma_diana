@@ -5,10 +5,11 @@ import { useState } from 'react'
 interface IProps {
   tmdbId: string
   mediaType: 'movie' | 'tv'
+  isFavorited: boolean
 }
 
-export default function FavoriteButton({ tmdbId, mediaType }: IProps) {
-  const [added, setAdded] = useState(false)
+export default function FavoriteButton({ tmdbId, mediaType, isFavorited }: IProps) {
+  const [added, setAdded] = useState(isFavorited)
   const [loading, setLoading] = useState(false)
 
   const handleAdd = async () => {
@@ -17,7 +18,7 @@ export default function FavoriteButton({ tmdbId, mediaType }: IProps) {
       await addToFavorites(tmdbId, mediaType)
       setAdded(true)
     } catch {
-      // якщо вже є або не авторизований
+      
     }
     setLoading(false)
   }

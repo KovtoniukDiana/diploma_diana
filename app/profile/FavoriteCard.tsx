@@ -14,7 +14,7 @@ export default function FavoriteCard({ movie }: { movie: any }) {
 
   return (
     <div className='flex flex-col gap-2 relative group'>
-      <Link href={`/content/${movie.id}`}>
+      <Link href={`/content/${movie.id}?type=${movie.mediaType}`}>
         <div className='relative aspect-2/3 w-full overflow-hidden rounded-xl bg-gray-900'>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

@@ -6,17 +6,9 @@ import { navItems } from "../config/navigation";
 import RegistrationModal from "./registration.modal";
 import LoginModal from "./login.modal";
 import ThemeSwitcher from './theme.switcher'
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button} from "@heroui/react";
+import SearchBar from './search.bar'
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem} from "@heroui/react";
 import { useSession, signOut } from "next-auth/react";
-
-
-interface IconProps extends React.SVGProps<SVGSVGElement> {
-  size?: number;
-  strokeWidth?: number;
-  
-  width?: number | string; 
-  height?: number | string; 
-}
 
 
 export const Logo = () => {
@@ -27,41 +19,11 @@ export const Logo = () => {
   );
 };
 
-export const SearchIcon = ({size = 24, strokeWidth = 1.5, width, height, ...props}: IconProps) => {
-  
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      focusable="false"
-      height={height || size}
-      role="presentation"
-      viewBox="0 0 24 24"
-      width={width || size}
-      {...props}
-    >
-      <path
-        d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={strokeWidth}
-      />
-      <path
-        d="M22 22L20 20"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={strokeWidth}
-      />
-    </svg>
-  );
-};
-
 export default function App() {
 
   const [isRegostrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const session = useSession();
   const {data} = session;
@@ -69,13 +31,17 @@ export default function App() {
 
 
   return (
-    <Navbar isBordered>
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-10">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Закрити меню" : "Відкрити меню"}
+          className="lg:hidden"
+        />
+        <NavbarBrand className="mr-2 sm:mr-6 lg:mr-10">
           <Logo />
           <Link className="hidden sm:block font-bold text-inherit text-[18px]" href="/">IANEMA</Link>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-7">
+        <NavbarContent className="hidden lg:flex gap-7">
 
           {navItems.map((item) => (
             <NavbarItem key={`label-${item.label}`}>
@@ -88,22 +54,11 @@ export default function App() {
         </NavbarContent>
       </NavbarContent>
 
-      <NavbarContent as="div" className="items-center" justify="end">
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
-            mainWrapper: "h-full ",
-            input: "text-small",
-            inputWrapper:
-              "rounded-lg bg-pink-100 hover:bg-pink-100 h-full font-normal text-default-500 border-2 border-pink-300",
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<SearchIcon size={18} />}
-          type="search"
-        />
+      <NavbarContent as="div" className="items-center gap-1.5 sm:gap-3" justify="end">
+        <SearchBar />
 
-          
+        <ThemeSwitcher />
+
         {session.status === 'authenticated' ? 
           <>
             <Dropdown placement="bottom-end">
@@ -158,7 +113,7 @@ export default function App() {
                   startContent={<Heart className="text-pink-500" size={18} />}
                   className="hover:bg-pink-50 transition-colors py-3"
                 >
-                  <p className="text-gray-700! font-medium">Вподобані фільми</p>
+                  <Link href="/profile" className="text-gray-700! font-medium">Вподобані фільми</Link>
                 </DropdownItem>
 
                 <DropdownItem 
@@ -173,18 +128,67 @@ export default function App() {
               </DropdownMenu>
             </Dropdown>
 
-            <Button as={Link} href="#" onPress={() => signOut({callbackUrl: "/"})} >Вийти</Button>
+            <Button as={Link} href="#" className="hidden lg:flex" onPress={() => signOut({callbackUrl: "/"})} >Вийти</Button>
           </>
           :
           <>
-            <Button as={Link} href="#" onPress={() => setIsRegistrationOpen(true)} >Зареєструватися</Button>
-            <Button as={Link} href="#" onPress={() => setIsLoginOpen(true)} >Увійти</Button>
+            <Button as={Link} href="#" size="sm" className="hidden lg:flex" onPress={() => setIsRegistrationOpen(true)} >Зареєструватися</Button>
+            <Button as={Link} href="#" size="sm" className="hidden lg:flex" onPress={() => setIsLoginOpen(true)} >Увійти</Button>
           </>
           }
       
       </NavbarContent>
 
-      <ThemeSwitcher />
+      <NavbarMenu>
+        {navItems.map((item) => (
+          <NavbarMenuItem key={`mobile-label-${item.label}`}>
+            <Link
+              className="w-full text-lg"
+              color="foreground"
+              href={item.href}
+              onPress={() => setIsMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+
+        <NavbarMenuItem className="mt-4 pt-4 border-t border-gray-200">
+          {session.status === 'authenticated' ? (
+            <Button
+              as={Link}
+              href="#"
+              color="danger"
+              variant="flat"
+              className="w-full"
+              onPress={() => { setIsMenuOpen(false); signOut({callbackUrl: "/"}); }}
+            >
+              Вийти з акаунту
+            </Button>
+          ) : (
+            <div className="flex flex-col gap-3">
+              <Button
+                as={Link}
+                href="#"
+                color="primary"
+                className="w-full"
+                onPress={() => { setIsMenuOpen(false); setIsLoginOpen(true); }}
+              >
+                Увійти
+              </Button>
+              <Button
+                as={Link}
+                href="#"
+                variant="bordered"
+                className="w-full"
+                onPress={() => { setIsMenuOpen(false); setIsRegistrationOpen(true); }}
+              >
+                Зареєструватися
+              </Button>
+            </div>
+          )}
+        </NavbarMenuItem>
+      </NavbarMenu>
 
       <RegistrationModal isOpen={isRegostrationOpen} onClose={() => setIsRegistrationOpen(false)} />
       <LoginModal isOpen={isLoginOpen} onClose={() => {setIsLoginOpen(false)}} />

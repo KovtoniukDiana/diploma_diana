@@ -36,13 +36,13 @@ export default async function ProfilePage() {
     <main className='w-[85%] mx-auto pt-8 pb-16'>
 
       {/* Шапка профілю */}
-      <div className='flex items-center gap-6 mb-12'>
+      <div className='flex items-center gap-4 sm:gap-6 mb-10 sm:mb-12'>
         {user.image && (
-          <img src={user.image} alt={user.name ?? ''} className='w-20 h-20 rounded-full object-cover' />
+          <img src={user.image} alt={user.name ?? ''} className='w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover shrink-0' />
         )}
-        <div>
-          <h1 className='text-3xl font-bold'>{user.name ?? 'Користувач'}</h1>
-          <p className='text-gray-500'>{user.email}</p>
+        <div className='min-w-0'>
+          <h1 className='text-xl sm:text-3xl font-bold truncate'>{user.name ?? 'Користувач'}</h1>
+          <p className='text-gray-500 text-sm sm:text-base truncate'>{user.email}</p>
         </div>
       </div>
 

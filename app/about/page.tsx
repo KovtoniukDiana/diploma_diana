@@ -41,7 +41,7 @@ export default function AboutPage() {
   return (
     <div className='flex flex-col'>
 
-      <div className='flex flex-col gap-25 self-end w-[67%] leading-7 z-1 pr-14 pt-12'>
+      <div className='flex flex-col gap-16 sm:gap-20 lg:gap-25 self-center lg:self-end w-full lg:w-[67%] leading-7 z-1 px-5 sm:px-10 lg:pl-0 lg:pr-14 pt-8 lg:pt-12'>
 
         <div className='flex flex-col items-center text-1xl '>
           <p className='text-center font-bold text-2xl'>Про нас</p>
@@ -61,18 +61,18 @@ export default function AboutPage() {
 
           {
             ourTeam.map((member) => (
-              <div key={`member${member.id}`} className='bg-linear-to-tr from-yellow-100/40 to-red-300/40 flex justify-between border-2 border-yellow-100 rounded-lg shadow-lg hover:shadow-2xl transition-shadow p-7'>
+              <div key={`member${member.id}`} className='bg-linear-to-tr from-yellow-100/40 to-red-300/40 flex flex-col sm:flex-row sm:justify-between items-center border-2 border-yellow-100 rounded-lg shadow-lg hover:shadow-2xl transition-shadow gap-6 p-5 sm:p-7'>
 
-                <div className='flex flex-col justify-center items-center text-center w-[60%]'>
+                <div className='flex flex-col justify-center items-center text-center w-full sm:w-[60%]'>
                   <p className='text-xl font-bold'>{member.name}</p>
                   <div className='bg-black w-[70%] h-px rounded-md mt-3 mb-5 dark-bg'></div>
                   <p className='text-xl'>{member.role}</p>
                   <p className=''>{member.info}</p>
                 </div>
 
-                <div className='relative w-62.5 h-57.5'>
-                  <Image src='/1piece.png' alt='' width={250} height={200} className='absolute left-0 z-10' />
-                  <Image src={member.image} alt='' width={250} height={200} className='absolute left-0 top-7' />
+                <div className='relative w-50 h-46 sm:w-62.5 sm:h-57.5 mx-auto sm:mx-0 shrink-0'>
+                  <Image src='/1piece.png' alt='' width={250} height={200} className='absolute left-0 z-10 w-full h-auto' />
+                  <Image src={member.image} alt='' width={250} height={200} className='absolute left-0 top-6 sm:top-7 w-full h-auto' />
                 </div>
 
               </div>
@@ -84,7 +84,7 @@ export default function AboutPage() {
       </div>
 
       
-      <div  className='fixed bottom-0 left-2.5 w-112.5 h-3/4 '>
+      <div className='hidden lg:block fixed bottom-0 left-2.5 w-112.5 h-3/4 '>
         <Image src='/round.png' alt=''fill className="h-full w-auto object-bottom" priority />
       </div>
 

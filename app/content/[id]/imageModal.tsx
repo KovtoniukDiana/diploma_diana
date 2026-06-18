@@ -19,7 +19,7 @@ export default function ImageModal({ backdrops }: IProps) {
     return (
         <div>
             <h3 className="text-2xl font-bold mb-4 text-left">Кадри з кінострічки</h3>
-            <div className="grid grid-cols-4 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
                 {backdrops.map((img, index) => (
                     <Image
                         key={index}

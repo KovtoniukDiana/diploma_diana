@@ -28,7 +28,7 @@ const filmPosters = [
 export default function Posters() {
 
   return (
-    <div className='relative h-100 overflow-hidden w-[85%]'>
+    <div className='relative h-56 sm:h-72 md:h-100 overflow-hidden w-[85%]'>
         <div className='w-full h-full grid grid-cols-5'>
             {filmPosters.map((el) => (
                 <div key={`fimPosterId- ${el.id}`} className='w-full h-full'>
@@ -37,11 +37,11 @@ export default function Posters() {
             ))}
         </div>
         <div className='absolute opacity-50 bg-black w-full h-full top-0 left-0'></div>
-        <div className='absolute w-full h-full top-0 left-0 flex flex-col justify-center p-7'>
-            <p className=' text-3xl font-black tracking-tighter bg-linear-to-tr from-pink-200 to-purple-500 bg-clip-text text-transparent! uppercase '>
+        <div className='absolute w-full h-full top-0 left-0 flex flex-col justify-center p-4 sm:p-7'>
+            <p className=' text-xl sm:text-2xl md:text-3xl font-black tracking-tighter bg-linear-to-tr from-pink-200 to-purple-500 bg-clip-text text-transparent! uppercase '>
                 Найгарячіші <br /> Новинки 2026
             </p>
-            <p className=' text-white! mt-4'>Дізнавайтеся більше про майбутні релізи з Dianema</p>
+            <p className=' text-white! mt-4 text-sm sm:text-base'>Дізнавайтеся більше про майбутні релізи з Dianema</p>
 
             <button className='flex gap-2 bg-transparent w-fit border border-white text-white font-medium rounded-xl pr-3 pl-3 mt-3 transition-transform  duration-400 ease-out hover:scale-110  '>
                 Check it out

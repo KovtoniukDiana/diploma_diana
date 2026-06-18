@@ -28,7 +28,7 @@ export default async function ContentGrid({ type, genre, page = 1, year, year_gt
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-15 pb-8 w-full">
                 {movies.map((movie: any) => (
-                    <Link href={`/content/${movie.id}`} key={`movie-id-${movie.id}`}>
+                    <Link href={`/content/${movie.id}?type=${type}`} key={`movie-id-${movie.id}`}>
                         <div className="flex flex-col gap-2">
                             <div className="relative aspect-2/3 w-full overflow-hidden rounded-xl bg-gray-900">
                                 <img
@@ -60,15 +60,15 @@ function Pagination({ page }: { page: number }) {
             {page > 1 && (
                 <a
                     href={`?page=${page - 1}`}
-                    className='border border-black rounded-xl px-4 py-2 bg-pink-100'
+                    className='border border-black rounded-xl px-4 py-2 bg-pink-100 text-black!'
                 >
                     ← Назад
                 </a>
             )}
-            <span className='flex items-center px-4'>{page}</span>
+            <p className='flex items-center px-4'>{page}</p>
             <a
                 href={`?page=${page + 1}`}
-                className='border border-black rounded-xl px-4 py-2 bg-pink-100'
+                className='border border-black rounded-xl px-4 py-2 bg-pink-100 text-black!'
             >
                 Вперед →
             </a>

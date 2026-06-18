@@ -62,12 +62,12 @@ export default function Filters() {
     }
 
     return (
-        <div className='flex justify-between mt-8 pt-4 pb-4 pr-2 pl-2'>
+        <div className='flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mt-6 sm:mt-8 pt-4 pb-4 pr-2 pl-2'>
 
-            <div className='relative flex flex-col w-fit'>
+            <div className='relative flex flex-col w-full sm:w-fit'>
                 <button
                     onClick={() => setGenresIsOpen(!genresIsOpen)}
-                    className='flex gap-2 items-center border border-black rounded-xl pl-2 pr-2 w-fit bg-pink-100'
+                    className='flex gap-2 items-center justify-between border border-black rounded-xl pl-2 pr-2 w-full sm:w-fit bg-pink-100'
                 >
                     <Input
                         type='text'
@@ -81,7 +81,7 @@ export default function Filters() {
                 </button>
 
                 {genresIsOpen && (
-                    <ul className='absolute top-full left-0 z-50 p-7 bg-white w-full rounded-md'>
+                    <ul className='absolute top-full left-0 z-50 p-5 sm:p-7 bg-white w-full rounded-md max-h-80 overflow-y-auto'>
                         {genres.map((el) => (
                             <li
                                 key={`genre-id-${el.id}`}
@@ -95,10 +95,10 @@ export default function Filters() {
                 )}
             </div>
 
-            <div className='relative flex flex-col w-fit'>
+            <div className='relative flex flex-col w-full sm:w-fit'>
                 <button
                     onClick={() => setYearIsOpen(!yearIsOpen)}
-                    className='flex gap-2 items-center border border-black rounded-xl pl-2 pr-2 w-fit bg-pink-100'
+                    className='flex gap-2 items-center justify-between border border-black rounded-xl pl-2 pr-2 w-full sm:w-fit bg-pink-100'
                 >
                     <Input
                         type='text'
@@ -112,9 +112,9 @@ export default function Filters() {
                 </button>
 
                 {yearIsOpen && (
-                    <div className='absolute top-full left-0 z-50 flex justify-between w-full rounded-md bg-white'>
-                        <ul className='p-7 w-[50%] rounded-md'>
-                            <p>Роки</p>
+                    <div className='absolute top-full left-0 z-50 flex justify-between w-full rounded-md bg-white max-h-80 overflow-y-auto'>
+                        <ul className='p-4 sm:p-7 w-[40%] rounded-md'>
+                            <p className='text-black!'>Роки</p>
                             {years.map((el) => (
                                 <li
                                     key={`year-${el.year}`}
@@ -125,8 +125,8 @@ export default function Filters() {
                                 </li>
                             ))}
                         </ul>
-                        <ul className='p-7 w-[50%] rounded-md'>
-                            <p>Періоди</p>
+                        <ul className='p-4 sm:p-7 w-[60%] rounded-md'>
+                            <p className='text-black!'>Періоди</p>
                             {periodYears.map((el) => (
                                 <li
                                     key={`periodOfYears-${el.period}`}
@@ -143,7 +143,7 @@ export default function Filters() {
 
             <button
                 onClick={handleClear}
-                className='flex gap-2 items-center h-fit border border-black rounded-xl p-2 bg-pink-100'
+                className='flex gap-2 items-center justify-center h-fit border border-black rounded-xl p-2 w-full sm:w-fit bg-pink-100'
             >
                 Очистити фільтри
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
